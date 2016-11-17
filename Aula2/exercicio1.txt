@@ -1,0 +1,61 @@
+> db.Alunos.insert({
+...      "name":"Francis",
+...      "birthday":ISODate("1985-05-08T19:00Z"),
+...      "Diciplinas":{
+...             "NoSql":11,
+...             "IBD":9,
+...             "AQD":8
+...      }
+... }
+... )
+WriteResult({ "nInserted" : 1 })
+> db.Alunos.insert({
+...      "name":"Jucelio",
+...      "birthday":ISODate("1984-05-08T19:00Z"),
+...      "Diciplinas":{
+...             "NoSql":5,
+...             "IBD":8,
+...             "AQD":12
+...      }
+... }
+... )
+WriteResult({ "nInserted" : 1 })
+> db.Alunos.insert({
+...      "name":"Jose",
+...      "birthday":ISODate("1992-05-08T19:00Z"),
+...      "Diciplinas":{
+...             "NoSql":1,
+...             "IBD":4,
+...             "AQD":9
+...      }
+... }
+... )
+WriteResult({ "nInserted" : 1 })
+> db.Alunos.insert({
+...      "name":"Claudio",
+...      "birthday":ISODate("1989-05-20T19:00Z"),
+...      "Diciplinas":{
+...             "NoSql":1,
+...             "IBD":4,
+...             "AQD":9
+...      }
+... }
+... )
+
+
+db.Alunos.aggregate(
+   [
+     {
+       $group:
+         {
+           _id: null,
+           min_idade: { $min: "$birthday" }
+         }
+     }
+   ]
+)
+
+
+db.Alunos.update({name : "Francis" } , {$set: {"Diciplinas.NoSql": 5}})
+
+db.Alunos.deleteOne({name : "Jose"})
